@@ -109,7 +109,7 @@ function returnArgumentsArray() {
     return function() {
         return fn.apply(null,[].slice.call(arg, 1));
     };
-}
+ }
 
 function sum(a, b) {
     return a + b;
