@@ -101,14 +101,21 @@ function returnArgumentsArray() {
 
    console.log(newSum()) выведет 6
  */
-function bindFunction(fn) {
-    var myFunc = fn();
-    for (let i = 1; i < arguments.length; i++) {
-        myFunc.bind(arguments[i]);    
-    }
 
-    return myFunc;
+
+
+ function bindFunction(fn) {
+    
+    var newArguments = Array.from(arguments);
+
+    return fn.apply(null,[].slice.call(arguments, 1));
 }
+function sum(a, b) {
+    return a + b;
+  }
+
+
+  console.log(bindFunction(sum,7,9));
 
 export {
     returnFirstArgument,
