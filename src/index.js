@@ -103,19 +103,12 @@ function returnArgumentsArray() {
  */
 function bindFunction(fn) {
     var myFunc = fn();
-    myFunc.call(arguments);
+    for (let i = 1; i < arguments.length; i++) {
+        myFunc.bind(arguments[i]);    
+    }
 
     return myFunc;
 }
-
-   function sum(a, b) {
-     return a + b;
-   }
-
-   var newSum = bindFunction(sum, 2, 4);
-
-   console.log(newSum());
-
 
 export {
     returnFirstArgument,
