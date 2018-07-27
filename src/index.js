@@ -105,17 +105,19 @@ function returnArgumentsArray() {
 
 
  function bindFunction(fn) {
-    
-    var newArguments = Array.from(arguments);
-
-    return fn.apply(null,[].slice.call(arguments, 1));
+    var arg = arguments;
+    return function() {
+        return fn.apply(null,[].slice.call(arg, 1));
+    };
 }
+
 function sum(a, b) {
     return a + b;
   }
 
+  var newSum = bindFunction(sum, 2, 4);
 
-  console.log(bindFunction(sum,7,9));
+  console.log(newSum());
 
 export {
     returnFirstArgument,
