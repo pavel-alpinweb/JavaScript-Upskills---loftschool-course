@@ -51,16 +51,6 @@ function reduce(array, fn, initial) {
   }
 }
 
-var arr = [2, 2, 3, 4, 5]
-
-// для каждого элемента массива запустить функцию,
-// промежуточный результат передавать первым аргументом далее
-var result = reduce(arr, function(sum, current) {
-  return sum + current;
-}, 0);
-
-alert( result );
-
 /*
  Задание 4:
 
@@ -84,8 +74,23 @@ function upperProps(obj) {
  Посмотрите как работает slice и повторите это поведение для массива, который будет передан в параметре array
  */
 function slice(array, from, to) {
-
+  let newArr = [];
+  if(to === undefined){
+    for (let i = from; i < array.length; i++) {
+      newArr.push(array[i]);
+    }
+    return newArr;
+  } else {
+    for (let i = from; i < to; i++) {
+      newArr.push(array[i]);
+    }
+    return newArr;
+  }
 }
+
+var arr = ["Почему", "надо", "учить", "JavaScript"];
+
+slice(arr,1,-1);
 
 /*
  Задание 6 *:
@@ -94,6 +99,7 @@ function slice(array, from, to) {
  Proxy должен перехватывать все попытки записи значений свойств и возводить это значение в квадрат
  */
 function createProxy(obj) {
+
 }
 
 export {
