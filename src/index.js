@@ -84,7 +84,11 @@ function upperProps(obj) {
  Посмотрите как работает slice и повторите это поведение для массива, который будет передан в параметре array
  */
 function slice(array, from, to) {
-
+  let newArr = [];
+  for (let i = from; i < to; i++) {
+    newArr.push(array[i]);
+  }
+  return newArr;
 }
 
 /*
@@ -94,6 +98,7 @@ function slice(array, from, to) {
  Proxy должен перехватывать все попытки записи значений свойств и возводить это значение в квадрат
  */
 function createProxy(obj) {
+
 }
 
 export {
