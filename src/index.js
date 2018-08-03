@@ -49,13 +49,7 @@ function reduce(array, fn, initial) {
     }
     return previousValue;
   }
-}
-
-var arr = ["h","o","m","e"];
-function rev(prevStr, curItem) {
- return prevStr + curItem;
-}
-console.log(reduce(arr,rev)); 
+} 
 
 
 /*
@@ -82,22 +76,36 @@ function upperProps(obj) {
  */
 function slice(array, from, to) {
   let newArr = [];
+  
+  if(to === undefined && from === undefined){
+    from = 0;
+    to = array.length;
+  } 
   if(to === undefined){
-    for (let i = from; i < array.length; i++) {
-      newArr.push(array[i]);
-    }
-    return newArr;
-  } else {
-    for (let i = from; i < to; i++) {
-      newArr.push(array[i]);
-    }
-    return newArr;
+    to = array.length;
+  }  
+  if(to < 0){
+    to = to + array.length
+  }  
+  if(to < -array.length){
+    to = 0;
   }
+  if(from < 0){
+    from = from + array.length
+  }  
+  if(from < -array.length){
+    from = 0;
+  }
+  if(to > array.length){
+    to = array.length;
+  }
+
+  for (from; from < to; from++) {
+    newArr.push(array[from]);
+  }
+    return newArr;
+
 }
-
-var arr = ["Почему", "надо", "учить", "JavaScript"];
-
-slice(arr,1,-1);
 
 /*
  Задание 6 *:
