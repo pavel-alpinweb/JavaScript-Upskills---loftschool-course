@@ -37,19 +37,26 @@ function map(array, fn) {
  */
 function reduce(array, fn, initial) {
   if(initial === undefined){
-    previousValue == array[0];
+   let previousValue = array[0];
     for (let i = 1; i < array.length; i++) {  
       previousValue = fn(previousValue,array[i],i,array);
     }
     return previousValue;
   } else {
-    previousValue = initial;
+    let previousValue = initial;
     for (let i = 0; i < array.length; i++) {  
       previousValue = fn(previousValue,array[i],i,array);
     }
     return previousValue;
   }
 }
+
+var arr = ["h","o","m","e"];
+function rev(prevStr, curItem) {
+ return prevStr + curItem;
+}
+console.log(reduce(arr,rev)); 
+
 
 /*
  Задание 4:
