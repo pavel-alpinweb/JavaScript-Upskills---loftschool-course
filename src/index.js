@@ -36,10 +36,30 @@ function map(array, fn) {
  Посмотрите как работает reduce и повторите это поведение для массива, который будет передан в параметре array
  */
 function reduce(array, fn, initial) {
-  for (let i = 0; i < array.length; i++) {
-    result = fn(result,array[i],i,array);
+  if(initial === undefined){
+    previousValue == array[0];
+    for (let i = 1; i < array.length; i++) {  
+      previousValue = fn(previousValue,array[i],i,array);
+    }
+    return previousValue;
+  } else {
+    previousValue = initial;
+    for (let i = 0; i < array.length; i++) {  
+      previousValue = fn(previousValue,array[i],i,array);
+    }
+    return previousValue;
   }
 }
+
+var arr = [2, 2, 3, 4, 5]
+
+// для каждого элемента массива запустить функцию,
+// промежуточный результат передавать первым аргументом далее
+var result = reduce(arr, function(sum, current) {
+  return sum + current;
+}, 0);
+
+alert( result );
 
 /*
  Задание 4:
@@ -54,11 +74,8 @@ function upperProps(obj) {
   for (let key in obj) {
     newArr.push(key.toUpperCase());
   }
-
   return newArr;
 }
-
-upperProps({ name: 'Сергей', lastName: 'Петров' });
 
 /*
  Задание 5 *:
@@ -67,6 +84,7 @@ upperProps({ name: 'Сергей', lastName: 'Петров' });
  Посмотрите как работает slice и повторите это поведение для массива, который будет передан в параметре array
  */
 function slice(array, from, to) {
+
 }
 
 /*
