@@ -80,6 +80,12 @@ function slice(array, from, to) {
       newArr.push(array[i]);
     }
     return newArr;
+  } else if (from < 0) {
+    from = -from;
+    for (let i = array.length - from; i < array.length; i--) {
+      newArr.push(array[i]);
+    }
+    return newArr;
   } else {
     for (let i = from; i < to; i++) {
       newArr.push(array[i]);
@@ -90,7 +96,7 @@ function slice(array, from, to) {
 
 var arr = ["Почему", "надо", "учить", "JavaScript"];
 
-slice(arr,1,-1);
+slice(arr,-1);
 
 /*
  Задание 6 *:
