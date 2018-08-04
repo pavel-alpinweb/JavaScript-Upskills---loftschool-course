@@ -89,19 +89,26 @@ try {
  */
 function returnBadArguments(fn) {
   var badArg = [];
+  if(typeof fn !== "function"){
+    throw new Error("fn is not a function");
+  }
   for (let index = 1; index < arguments.length; index++) {
-    var arg = arguments[index];
-    if (typeof arg !== "function") {
-      badArg.push(arg);
+    try {
+        fn(arguments[index])
+    } catch (error) {
+        badArg.push(arguments[index]);
     }
   }
 
   return badArg;
 }
-function string(a) {
-  return a;
-}
-console.log(returnBadArguments(string(), "[1,1,2]", "[1,1,2]", "[1,1,2]"));
+
+try {
+    console.log(returnBadArguments(n => n + n,'1','2','3'));
+  } catch (error) {
+    console.log(error.message);
+  }
+
 
 /*
  Задание 4:
@@ -120,7 +127,25 @@ console.log(returnBadArguments(string(), "[1,1,2]", "[1,1,2]", "[1,1,2]"));
    - number не является числом (с текстом "number is not a number")
    - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
-function calculator() {}
+function calculator(number=0) {
+    if(isNaN(number)){
+        throw new Error("number is not a number");
+    }
+    let calculatorObject = {
+        sum: function(){
+            for (let index = 0; index < arguments.length; index++) {
+                let result = number + arguments[index];
+            }
+            return result;
+        }, 
+        dif: function(){
+            for (let index = 0; index < arguments.length; index++) {
+                let result = result - arguments[index];
+            }
+        } 
+    }
+    return calculatorObject;
+}
 
 /* При решении задач, пострайтесь использовать отладчик */
 
