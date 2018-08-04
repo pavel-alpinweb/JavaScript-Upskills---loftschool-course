@@ -88,10 +88,12 @@ try {
    - fn не является функцией (с текстом "fn is not a function")
  */
 function returnBadArguments(fn) {
-  let badArg = [];
+  var badArg = [];
   for (let index = 1; index < arguments.length; index++) {
-    let element = arguments[index];
-    fn(element);
+    var arg = arguments[index];
+    if (typeof arg !== "function") {
+      badArg.push(arg);
+    }
   }
 
   return badArg;
@@ -118,14 +120,7 @@ console.log(returnBadArguments(string(), "[1,1,2]", "[1,1,2]", "[1,1,2]"));
    - number не является числом (с текстом "number is not a number")
    - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
-function calculator(number = 0) {
-    let myObj = {
-        sum: function(){
-            
-        }
-    }
-    return myObj;
-}
+function calculator() {}
 
 /* При решении задач, пострайтесь использовать отладчик */
 
