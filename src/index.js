@@ -55,6 +55,25 @@ try {
    isSomeTrue([1, 2, 3, 4, 5], n => n > 20) // вернет false
  */
 function isSomeTrue(array, fn) {
+    if(!Array.isArray(array) || array.length == 0){
+        throw new Error('empty array');
+    }
+    if(!typeof fn == 'function'){
+        throw new Error('fn is not a function');
+    }
+    for (let index = 0; index < array.length; index++) {
+        var result = fn(array[index]);  
+        if(result === true){
+            return true;
+        }
+    }
+    return false;
+}
+
+try {
+    console.log(isSomeTrue([1, 2, 3, 4, 5], n => n > 20));
+} catch (error) {
+    console.log(error.message);
 }
 
 /*
