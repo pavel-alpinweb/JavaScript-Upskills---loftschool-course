@@ -89,14 +89,14 @@ try {
  */
 function returnBadArguments(fn) {
   var badArg = [];
-  if(typeof fn !== "function"){
+  if (typeof fn !== "function") {
     throw new Error("fn is not a function");
   }
   for (let index = 1; index < arguments.length; index++) {
     try {
-        fn(arguments[index])
+      fn(arguments[index]);
     } catch (error) {
-        badArg.push(arguments[index]);
+      badArg.push(arguments[index]);
     }
   }
 
@@ -104,11 +104,10 @@ function returnBadArguments(fn) {
 }
 
 try {
-    console.log(returnBadArguments(n => n + n,'1','2','3'));
-  } catch (error) {
-    console.log(error.message);
-  }
-
+  console.log(returnBadArguments(n => n + n, "1", "2", "3"));
+} catch (error) {
+  console.log(error.message);
+}
 
 /*
  Задание 4:
@@ -127,25 +126,49 @@ try {
    - number не является числом (с текстом "number is not a number")
    - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
-function calculator(number=0) {
-    if(isNaN(number)){
-        throw new Error("number is not a number");
+function calculator(number = 0) {
+  if (isNaN(number)) {
+    throw new Error("number is not a number");
+  }
+  let calculatorObject = {
+    sum: function() {
+      let resultSum = number;
+      for (let index = 0; index < arguments.length; index++) {
+        resultSum += arguments[index];
+      }
+      return resultSum;
+    },
+    dif: function() {
+      let resultDif = number;
+      for (let index = 0; index < arguments.length; index++) {
+        resultDif -= arguments[index];
+      }
+      return resultDif;
+    },
+    div: function() {
+      let resultDiv = number;
+      for (let index = 0; index < arguments.length; index++) {
+        if (arguments[index] == 0) {
+          throw new Error("division by 0");
+        }
+        resultDiv = resultDiv / arguments[index];
+      }
+      return resultDiv;
+    },
+    mul: function() {
+      let resultMul = number;
+      for (let index = 0; index < arguments.length; index++) {
+        resultMul = resultMul * arguments[index];
+      }
+      return resultMul;
     }
-    let calculatorObject = {
-        sum: function(){
-            for (let index = 0; index < arguments.length; index++) {
-                let result = number + arguments[index];
-            }
-            return result;
-        }, 
-        dif: function(){
-            for (let index = 0; index < arguments.length; index++) {
-                let result = result - arguments[index];
-            }
-        } 
-    }
-    return calculatorObject;
+  };
+  return calculatorObject;
 }
+
+var result = calculator(1);
+
+console.log(result.mul(1,2,3));
 
 /* При решении задач, пострайтесь использовать отладчик */
 
