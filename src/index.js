@@ -18,7 +18,12 @@
  */
 function isAllTrue(array, fn) {
     for (let index = 0; index < array.length; index++) {
-        fn(array[index]);  
+        var result = fn(array[index]);  
+        if(result == true){
+            return true;
+        } else if(result == false){
+            return false;
+        }
     }
 }
 
