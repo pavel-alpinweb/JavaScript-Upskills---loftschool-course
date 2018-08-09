@@ -26,6 +26,7 @@ function createDivWithText(text) {
    prepend(document.querySelector('#one'), document.querySelector('#two')) // добавит элемент переданный первым аргументом в начало элемента переданного вторым аргументом
  */
 function prepend(what, where) {
+    where.prepend(what);
 }
 
 /*
@@ -48,7 +49,17 @@ function prepend(what, where) {
    findAllPSiblings(document.body) // функция должна вернуть массив с элементами div и span т.к. следующим соседом этих элементов является элемент с тегом P
  */
 function findAllPSiblings(where) {
+    let collection = where.children;
+    let myArray = [];
+    for (let index = 0; index < collection.length; index++) {
+        if(collection[index].nextElementSibling == 'тут должен быть объект с которым сранвивают'){
+            myArray.push(collection[index]);  
+        }    
+    }
+    return myArray;
 }
+
+findAllPSiblings(document.body);
 
 /*
  Задание 4:
@@ -70,7 +81,7 @@ function findAllPSiblings(where) {
 function findError(where) {
     var result = [];
 
-    for (var child of where.childNodes) {
+    for (var child of where.children) {
         result.push(child.innerText);
     }
 
