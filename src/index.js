@@ -99,7 +99,12 @@ function findError(where) {
    должно быть преобразовано в <div></div><p></p>
  */
 function deleteTextNodes(where) {
-
+    let collection = where.childNodes;
+    for (let index = 0; index < collection.length; index++) {
+        if(collection[index].nodeType == 3){
+            where.removeChild(collection[index]);
+        }
+    }
 }
 
 /*
