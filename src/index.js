@@ -51,15 +51,13 @@ function prepend(what, where) {
 function findAllPSiblings(where) {
     let collection = where.children;
     let myArray = [];
-    for (let index = 0; index < collection.length; index++) {
-        if(collection[index].nextElementSibling == 'тут должен быть объект с которым сранвивают'){
+    for (let index = 0; index < collection.length-1; index++) {
+        if(collection[index].nextElementSibling.tagName  == 'P'){
             myArray.push(collection[index]);  
         }    
     }
     return myArray;
 }
-
-findAllPSiblings(document.body);
 
 /*
  Задание 4:
@@ -101,6 +99,7 @@ function findError(where) {
    должно быть преобразовано в <div></div><p></p>
  */
 function deleteTextNodes(where) {
+
 }
 
 /*
