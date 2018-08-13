@@ -222,22 +222,40 @@ function collectDOMStat(root) {
    }
  */
 function observeChildNodes(where, fn) {
-    
+    let params = {
+        type: null,
+        nodes: []
+    };
     // создаём экземпляр MutationObserver
-    var observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-        console.log(mutation.type);
-    });    
+    let observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            let addNodes = mutation.addedNodes;
+            let removeNodes = mutation.removedNodes;
+            if(addNodes.length !== 0){
+                for (let index = 0; index < addNodes.length; index++) {
+                    params.nodes.push(addNodes[index]);
+                }
+                params.type = 'insert';
+            }
+            if(removeNodes.length !== 0){
+                for (let index = 0; index < removeNodes.length; index++) {
+                    params.nodes.push(removeNodes[index]);
+                }
+                params.type = 'remove';
+            }
+            fn(params);
+        });    
     });
     
     // конфигурация нашего observer:
-    var config = { attributes: true, childList: true, characterData: true };
+    let config = { subtree: true, attributes: false, childList: true, characterData: false };
     
     // передаём в качестве аргументов целевой элемент и его конфигурацию
     observer.observe(where, config);
-}
 
-observeChildNodes(document.querySelector('body'));
+    // console.log(params);
+    
+}
 
 export {
     createDivWithText,
