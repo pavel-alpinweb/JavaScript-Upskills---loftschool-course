@@ -154,9 +154,29 @@ function deleteTextNodesRecursive(where) {
    }
  */
 function collectDOMStat(root) {
-  
+  let domObject = {
+      tags:{},
+      classes:{},
+      text:0
+  };
+  let myClasses;
+  let rootNodes = root.childNodes;
+  for (let i = 0; i < rootNodes.length; i++) {
+    if(rootNodes[i].nodeType == 3){
+        domObject.text++; 
+    }
+    if(rootNodes[i].nodeType == 1){
+        domObject.tags[rootNodes[i].tagName] = document.querySelectorAll(rootNodes[i].tagName).length; 
+        myClasses = rootNodes[i].classList;
+        for (let index = 0; index < myClasses.length; index++) {
+            domObject.classes[myClasses[index]] = document.querySelectorAll('.' + myClasses[index]).length;
+        } 
+    }
+  }
+  return domObject;
 }
 
+console.log(collectDOMStat(document.querySelector('.some-class-1')));
 /*
  Задание 8 *:
 
