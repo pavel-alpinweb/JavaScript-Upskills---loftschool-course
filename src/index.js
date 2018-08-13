@@ -157,26 +157,38 @@ function collectDOMStat(root) {
   let domObject = {
       tags:{},
       classes:{},
-      text:0
+      texts:0
   };
-  let myClasses;
-  let rootNodes = root.childNodes;
-  for (let i = 0; i < rootNodes.length; i++) {
-    if(rootNodes[i].nodeType == 3){
-        domObject.text++; 
-    }
-    if(rootNodes[i].nodeType == 1){
-        domObject.tags[rootNodes[i].tagName] = document.querySelectorAll(rootNodes[i].tagName).length; 
-        myClasses = rootNodes[i].classList;
-        for (let index = 0; index < myClasses.length; index++) {
-            domObject.classes[myClasses[index]] = document.querySelectorAll('.' + myClasses[index]).length;
-        } 
-    }
+  
+  function domFor(element){
+    let rootNodes = element.childNodes;
+    for (let i = 0; i < rootNodes.length; i++) {
+        if(rootNodes[i].nodeType == 3){
+            domObject.texts++; 
+        }
+        if(rootNodes[i].nodeType == 1){
+            if (domObject.tags[rootNodes[i].tagName]) {
+                domObject.tags[rootNodes[i].tagName]++
+            } else {
+                domObject.tags[rootNodes[i].tagName] = 1;
+            }
+            let myClasses = rootNodes[i].classList;
+            for (let index = 0; index < myClasses.length; index++) {
+                if (domObject.classes[myClasses[index]]) {
+                    domObject.classes[myClasses[index]]++
+                    console.log(domObject.classes[index]);
+                } else {
+                    domObject.classes[myClasses[index]] = 1;
+                }
+            } 
+            domFor(rootNodes[i]);
+        }
+      }  
+      
   }
+  domFor(root);
   return domObject;
 }
-
-console.log(collectDOMStat(document.querySelector('.some-class-1')));
 /*
  Задание 8 *:
 
@@ -210,7 +222,22 @@ console.log(collectDOMStat(document.querySelector('.some-class-1')));
    }
  */
 function observeChildNodes(where, fn) {
+    
+    // создаём экземпляр MutationObserver
+    var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        console.log(mutation.type);
+    });    
+    });
+    
+    // конфигурация нашего observer:
+    var config = { attributes: true, childList: true, characterData: true };
+    
+    // передаём в качестве аргументов целевой элемент и его конфигурацию
+    observer.observe(where, config);
 }
+
+observeChildNodes(document.querySelector('body'));
 
 export {
     createDivWithText,
