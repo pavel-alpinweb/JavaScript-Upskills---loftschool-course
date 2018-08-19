@@ -45,6 +45,48 @@ const listTable = homeworkContainer.querySelector("#list-table tbody");
 
 filterNameInput.addEventListener("keyup", function() {
   // здесь можно обработать нажатия на клавиши внутри текстового поля для фильтрации cookie
+  let filter = filterNameInput.value;
+
+  let cookie = document.cookie.split("; ").reduce((prev, current) => {
+    const [name, value] = current.split("=");
+    prev[name] = value;
+    return prev;
+  }, {});
+  let cookieRow = document.querySelectorAll(".cookie-row");
+
+  
+
+  for (const name in cookie) {
+    name.toLowerCase();
+    if (name.indexOf(filter) > -1 || cookie[name].indexOf(filter) > -1) {
+      for (let i of cookieRow) {
+        i.remove();
+      }
+      listTable.insertAdjacentHTML(
+        "beforeEnd",
+        `<tr class="cookie-row" id="${name}"><td>${name}</td><td>${
+          cookie[name]
+        }</td><td><button class="deleteCookie">Удалить</button</tr>`
+      );
+    } else if (filter == "") {
+      for (let i of cookieRow) {
+        i.remove();
+      }
+  
+      for (const name in cookie) {
+        listTable.insertAdjacentHTML(
+          "beforeEnd",
+          `<tr class="cookie-row" id="${name}"><td>${name}</td><td>${
+            cookie[name]
+          }</td><td><button class="deleteCookie">Удалить</button</tr>`
+        );
+      }
+    } else {
+      for (let i of cookieRow) {
+        i.remove();
+      }
+    }
+  }
 });
 
 // здесь можно обработать нажатие на кнопку "добавить cookie"
@@ -65,7 +107,7 @@ function getCookie(name) {
 function deleteCookie(name) {
   let date = new Date(0);
   document.cookie = `${name}=; path=/; expires=${date.toUTCString()}`;
-  let cookieRow = document.querySelector(`.${name}`);
+  let cookieRow = document.getElementById(name);
   cookieRow.remove();
 }
 
@@ -76,27 +118,28 @@ function addCookie(name, value, dateCookie) {
   document.cookie = `${name}=${value}; path=/; expires=${dateCookie.toUTCString()}`;
   listTable.insertAdjacentHTML(
     "beforeEnd",
-    `<tr class="${name}"><td>${name}</td><td>${value}</td><td><button class="deleteCookie">Удалить</button</tr>`
+    `<tr class="cookie-row" id="${name}"><td>${name}</td><td>${value}</td><td><button class="deleteCookie">Удалить</button</tr>`
   );
 }
 
 addButton.addEventListener("click", () => {
-  let date = new Date(new Date().getTime() + 60 * 1000);
+  let date = new Date(new Date().getTime() + 60 * 1000 * 60);
   let cookieName = addNameInput.value;
   let cookieValue = addValueInput.value;
 
-  addCookie(cookieName,cookieValue,date);
+  addCookie(cookieName, cookieValue, date);
+
+  let event = new Event("keyup");
+  filterNameInput.dispatchEvent(event);
 
   addNameInput.value = "";
   addValueInput.value = "";
 });
 
-
-listTable.addEventListener("click",(e) =>{
+listTable.addEventListener("click", e => {
   if (e.target.className == "deleteCookie") {
     let myRow = e.target.parentNode.parentNode;
-    let cookieName = myRow.className;
-    console.log(cookieName);
+    let cookieName = myRow.id;
     deleteCookie(cookieName);
     myRow.remove();
   }
