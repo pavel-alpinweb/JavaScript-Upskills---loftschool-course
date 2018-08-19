@@ -43,6 +43,21 @@ const addButton = homeworkContainer.querySelector("#add-button");
 // таблица со списком cookie
 const listTable = homeworkContainer.querySelector("#list-table tbody");
 
+let cookie = document.cookie.split("; ").reduce((prev, current) => {
+  const [name, value] = current.split("=");
+  prev[name] = value;
+  return prev;
+}, {});
+for (const name in cookie){
+  listTable.insertAdjacentHTML(
+    "beforeEnd",
+    `<tr class="cookie-row" id="${name}"><td>${name}</td><td>${
+      cookie[name]
+    }</td><td><button class="deleteCookie">Удалить</button</tr>`
+  );
+}
+
+
 filterNameInput.addEventListener("keyup", function() {
   // здесь можно обработать нажатия на клавиши внутри текстового поля для фильтрации cookie
   let filter = filterNameInput.value;
