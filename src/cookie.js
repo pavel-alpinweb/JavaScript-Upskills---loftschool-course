@@ -31,52 +31,61 @@
    const newDiv = document.createElement('div');
    homeworkContainer.appendChild(newDiv);
  */
-const homeworkContainer = document.querySelector('#homework-container');
+const homeworkContainer = document.querySelector("#homework-container");
 // текстовое поле для фильтрации cookie
-const filterNameInput = homeworkContainer.querySelector('#filter-name-input');
+const filterNameInput = homeworkContainer.querySelector("#filter-name-input");
 // текстовое поле с именем cookie
-const addNameInput = homeworkContainer.querySelector('#add-name-input');
+const addNameInput = homeworkContainer.querySelector("#add-name-input");
 // текстовое поле со значением cookie
-const addValueInput = homeworkContainer.querySelector('#add-value-input');
+const addValueInput = homeworkContainer.querySelector("#add-value-input");
 // кнопка "добавить cookie"
-const addButton = homeworkContainer.querySelector('#add-button');
+const addButton = homeworkContainer.querySelector("#add-button");
 // таблица со списком cookie
-const listTable = homeworkContainer.querySelector('#list-table tbody');
+const listTable = homeworkContainer.querySelector("#list-table tbody");
 
-filterNameInput.addEventListener('keyup', function() {
-    // здесь можно обработать нажатия на клавиши внутри текстового поля для фильтрации cookie
+filterNameInput.addEventListener("keyup", function() {
+  // здесь можно обработать нажатия на клавиши внутри текстового поля для фильтрации cookie
 });
 
-addButton.addEventListener('click', () => {
-    // здесь можно обработать нажатие на кнопку "добавить cookie"
+// здесь можно обработать нажатие на кнопку "добавить cookie"
 
-    // Немножечко схитрим :)
-    // https://learn.javascript.ru/cookie#%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D1%8F-setcookie-name-value-options
-    function getCookie(name) {
-      var matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-      ));
-      return matches ? decodeURIComponent(matches[1]) : undefined;
-    }
-    // https://learn.javascript.ru/cookie#%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D1%8F-deletecookie-name
-    function deleteCookie(name) {
-      let date = new Date(0);
-      document.cookie = `${name}=; path=/; expires=${date.toUTCString()}`;
-      let cookieRow = document.querySelector(`.${name}`);
-      cookieRow.remove();
-    }
+// Немножечко схитрим :)
+// https://learn.javascript.ru/cookie#%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D1%8F-setcookie-name-value-options
+function getCookie(name) {
+  var matches = document.cookie.match(
+    new RegExp(
+      "(?:^|; )" +
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+        "=([^;]*)"
+    )
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+// https://learn.javascript.ru/cookie#%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D1%8F-deletecookie-name
+function deleteCookie(name) {
+  let date = new Date(0);
+  document.cookie = `${name}=; path=/; expires=${date.toUTCString()}`;
+  let cookieRow = document.querySelector(`.${name}`);
+  cookieRow.remove();
+}
 
-    let date = new Date(new Date().getTime() + 60 * 1000);
-    let cookieName = addNameInput.value;
-    let cookieValue = addValueInput.value;
-    if (cookieName == getCookie(cookieName)) {
-      deleteCookie(cookieName);
-    }
-    document.cookie = `${cookieName}=${cookieValue}; path=/; expires=${date.toUTCString()}`;
-    listTable.insertAdjacentHTML("beforeEnd", 
-      `<tr class="${cookieName}"><td>${cookieName}</td><td>${cookieValue}</td><td><button class="deleteCookie">Удалить</button</tr>`
-    );
+function addCookie(name,value,date) {
+  
+}
 
-    addNameInput = "";
-    addValueInput = "";
+addButton.addEventListener("click", () => {
+  let date = new Date(new Date().getTime() + 60 * 1000);
+  let cookieName = addNameInput.value;
+  let cookieValue = addValueInput.value;
+  if (cookieName == getCookie(cookieName)) {
+    deleteCookie(cookieName);
+  }
+  document.cookie = `${cookieName}=${cookieValue}; path=/; expires=${date.toUTCString()}`;
+  listTable.insertAdjacentHTML(
+    "beforeEnd",
+    `<tr class="${cookieName}"><td>${cookieName}</td><td>${cookieValue}</td><td><button class="deleteCookie">Удалить</button</tr>`
+  );
+
+  addNameInput.value = "";
+  addValueInput.value = "";
 });
