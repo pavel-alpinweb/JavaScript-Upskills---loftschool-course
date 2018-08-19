@@ -90,3 +90,14 @@ addButton.addEventListener("click", () => {
   addNameInput.value = "";
   addValueInput.value = "";
 });
+
+
+listTable.addEventListener("click",(e) =>{
+  if (e.target.className == "deleteCookie") {
+    let myRow = e.target.parentNode.parentNode;
+    let cookieName = myRow.className;
+    console.log(cookieName);
+    deleteCookie(cookieName);
+    myRow.remove();
+  }
+});
