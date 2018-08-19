@@ -85,7 +85,10 @@ filterInput.addEventListener('keyup', function() {
     for (const town of towns) {
         town.name.toLowerCase();
         if (town.name.indexOf(filter) > -1) {
-            console.log(town.name);  
+            filterResult.insertAdjacentHTML(
+                "beforeEnd",
+                `<h3>${town.name}</h3>`
+            );
         }   
     } 
 });
