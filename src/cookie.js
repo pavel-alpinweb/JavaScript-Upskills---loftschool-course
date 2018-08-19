@@ -69,22 +69,23 @@ function deleteCookie(name) {
   cookieRow.remove();
 }
 
-function addCookie(name,value,date) {
-  
+function addCookie(name, value, dateCookie) {
+  if (name == getCookie(name)) {
+    deleteCookie(name);
+  }
+  document.cookie = `${name}=${value}; path=/; expires=${dateCookie.toUTCString()}`;
+  listTable.insertAdjacentHTML(
+    "beforeEnd",
+    `<tr class="${name}"><td>${name}</td><td>${value}</td><td><button class="deleteCookie">Удалить</button</tr>`
+  );
 }
 
 addButton.addEventListener("click", () => {
   let date = new Date(new Date().getTime() + 60 * 1000);
   let cookieName = addNameInput.value;
   let cookieValue = addValueInput.value;
-  if (cookieName == getCookie(cookieName)) {
-    deleteCookie(cookieName);
-  }
-  document.cookie = `${cookieName}=${cookieValue}; path=/; expires=${date.toUTCString()}`;
-  listTable.insertAdjacentHTML(
-    "beforeEnd",
-    `<tr class="${cookieName}"><td>${cookieName}</td><td>${cookieValue}</td><td><button class="deleteCookie">Удалить</button</tr>`
-  );
+
+  addCookie(cookieName,cookieValue,date);
 
   addNameInput.value = "";
   addValueInput.value = "";
