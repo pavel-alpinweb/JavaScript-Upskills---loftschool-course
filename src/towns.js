@@ -77,9 +77,11 @@ const filterInput = homeworkContainer.querySelector('#filter-input');
 /* Блок с результатами поиска */
 const filterResult = homeworkContainer.querySelector('#filter-result');
 
+loadTowns();
 filterInput.addEventListener('keyup', function() {
     // это обработчик нажатия кливиш в текстовом поле
-    
+    let filter = filterInput.value;
+    loadTowns().then(towns => console.log(towns))
 });
 
 export {
