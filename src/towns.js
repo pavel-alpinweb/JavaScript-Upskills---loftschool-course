@@ -83,11 +83,11 @@ filterInput.addEventListener('keyup', function() {
     // это обработчик нажатия кливиш в текстовом поле
     let filter = filterInput.value;
     for (const town of towns) {
-        if (condition) {
+        town.name.toLowerCase();
+        if (town.name.indexOf(filter) > -1) {
             console.log(town.name);  
         }   
-    }
-   
+    } 
 });
 
 export {
