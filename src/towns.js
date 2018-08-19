@@ -77,19 +77,17 @@ const filterInput = homeworkContainer.querySelector('#filter-input');
 /* Блок с результатами поиска */
 const filterResult = homeworkContainer.querySelector('#filter-result');
 
-loadTowns();
+let towns;
+loadTowns().then(myJson => {towns = myJson;});
 filterInput.addEventListener('keyup', function() {
     // это обработчик нажатия кливиш в текстовом поле
     let filter = filterInput.value;
-    loadTowns().then(myJson => {
-        let towns = JSON.parse(myJson);
-        return towns;
-    })
-    .then((towns) => {
-        for (let i of towns) {
-            console.log(towns[i].name);
-        }
-    });
+    for (const town of towns) {
+        if (condition) {
+            console.log(town.name);  
+        }   
+    }
+   
 });
 
 export {
