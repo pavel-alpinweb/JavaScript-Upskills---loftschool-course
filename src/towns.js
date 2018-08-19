@@ -36,14 +36,22 @@ const homeworkContainer = document.querySelector('#homework-container');
  Массив городов пожно получить отправив асинхронный запрос по адресу
  https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json
  */
+
 function loadTowns() {
-  fetch('https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json')
-  .then( (response)=>{
-    return response.json();
-  })
-  .then( (towns)=>{
-    console.log(towns.name);
-  });
+  let promise = new Promise((resolve, reject) => {
+    var req = new XMLHttpRequest();
+    req.open('GET', 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json', true);
+    req.responseType = "json";
+    req.onload = function() {
+        filterBlock.removeAttribute('style');
+        loadingBlock.remove();
+        let myJson  = req.response;
+        resolve(myJson);
+    };
+    req.send();
+});
+
+return promise;
 }
 
 /*
@@ -71,6 +79,7 @@ const filterResult = homeworkContainer.querySelector('#filter-result');
 
 filterInput.addEventListener('keyup', function() {
     // это обработчик нажатия кливиш в текстовом поле
+    
 });
 
 export {

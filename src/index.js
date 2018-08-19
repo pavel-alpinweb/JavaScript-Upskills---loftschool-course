@@ -54,8 +54,6 @@ function loadAndSortTowns() {
     
 }
 
-loadAndSortTowns().then(towns => console.log(towns));
-
 export {
     delayPromise,
     loadAndSortTowns
