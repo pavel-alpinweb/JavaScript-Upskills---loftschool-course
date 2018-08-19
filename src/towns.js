@@ -81,12 +81,15 @@ loadTowns();
 filterInput.addEventListener('keyup', function() {
     // это обработчик нажатия кливиш в текстовом поле
     let filter = filterInput.value;
-    let towns = loadTowns().then(towns => console.log(towns));
-    console.log(towns);
-
-    for (let name in towns) {
-        let myTown = towns.name;
-    }
+    loadTowns().then(myJson => {
+        let towns = JSON.parse(myJson);
+        return towns;
+    })
+    .then((towns) => {
+        for (let i of towns) {
+            console.log(towns[i].name);
+        }
+    });
 });
 
 export {
