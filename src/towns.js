@@ -66,6 +66,10 @@ return promise;
    isMatching('Moscow', 'Moscov') // false
  */
 function isMatching(full, chunk) {
+    if (full.indexOf(chunk) > -1) {
+        true;
+    }
+    false;
 }
 
 /* Блок с надписью "Загрузка" */
@@ -81,11 +85,16 @@ let towns;
 loadTowns().then(myJson => {towns = myJson;});
 filterInput.addEventListener('keyup', function() {
     // это обработчик нажатия кливиш в текстовом поле
-    let filter = filterInput.value;
+    let filter = filterInput.value.toLowerCase();
     let townEl = document.querySelectorAll('h3');
     for (const town of towns) {
-        town.name.toLowerCase();
-        if (town.name.indexOf(filter) > -1) {
+        let lowertowns = town.name.toLowerCase();
+        if(filter == ''){
+            console.log('pull');
+            for (let i of townEl) {
+                i.remove();
+            }
+        } else if (lowertowns.indexOf(filter) > -1) {
             for (let i of townEl) {
                 i.remove();
             }
@@ -93,11 +102,9 @@ filterInput.addEventListener('keyup', function() {
                 "beforeEnd",
                 `<h3>${town.name}</h3>`
             );
-        } else if(filter == ''){
-            console.log('пусто');
-            filterResult.innerHTML = '';
         }
     } 
+    
 });
 
 export {
