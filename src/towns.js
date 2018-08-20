@@ -72,9 +72,9 @@ return promise;
  */
 function isMatching(full, chunk) {
     if (full.indexOf(chunk) > -1) {
-        true;
+       return true;
     }
-    false;
+    return false;
 }
 
 /* Блок с надписью "Загрузка" */
@@ -98,7 +98,7 @@ filterInput.addEventListener('keyup', function() {
             for (let i of townEl) {
                 i.remove();
             }
-        } else if (lowertowns.indexOf(filter) > -1) {
+        } else if (isMatching(lowertowns,filter)) {
             for (let i of townEl) {
                 i.remove();
             }
