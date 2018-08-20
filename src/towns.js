@@ -94,9 +94,8 @@ filterInput.addEventListener('keyup', function() {
                 `<h3>${town.name}</h3>`
             );
         } else if(filter == ''){
-            for (let i of townEl) {
-                i.remove();
-            }
+            console.log('пусто');
+            filterResult.innerHTML = '';
         }
     } 
 });
