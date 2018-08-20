@@ -86,11 +86,18 @@ filterInput.addEventListener('keyup', function() {
     for (const town of towns) {
         town.name.toLowerCase();
         if (town.name.indexOf(filter) > -1) {
+            for (let i of townEl) {
+                i.remove();
+            }
             filterResult.insertAdjacentHTML(
                 "beforeEnd",
                 `<h3>${town.name}</h3>`
             );
-        }   
+        } else if(filter == ''){
+            for (let i of townEl) {
+                i.remove();
+            }
+        }
     } 
 });
 
