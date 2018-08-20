@@ -82,6 +82,7 @@ loadTowns().then(myJson => {towns = myJson;});
 filterInput.addEventListener('keyup', function() {
     // это обработчик нажатия кливиш в текстовом поле
     let filter = filterInput.value;
+    let townEl = document.querySelectorAll('h3');
     for (const town of towns) {
         town.name.toLowerCase();
         if (town.name.indexOf(filter) > -1) {
