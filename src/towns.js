@@ -46,6 +46,11 @@ function loadTowns() {
         filterBlock.removeAttribute('style');
         loadingBlock.remove();
         let myJson  = req.response;
+        myJson.sort(function(a, b){
+            if(a.name < b.name) return -1;
+            if(a.name > b.name) return 1;
+            return 0;
+        });
         resolve(myJson);
     };
     req.send();
@@ -90,7 +95,6 @@ filterInput.addEventListener('keyup', function() {
     for (const town of towns) {
         let lowertowns = town.name.toLowerCase();
         if(filter == ''){
-            console.log('pull');
             for (let i of townEl) {
                 i.remove();
             }
@@ -102,6 +106,10 @@ filterInput.addEventListener('keyup', function() {
                 "beforeEnd",
                 `<h3>${town.name}</h3>`
             );
+        } else{
+            for (let i of townEl) {
+                i.remove();
+            }
         }
     } 
     
