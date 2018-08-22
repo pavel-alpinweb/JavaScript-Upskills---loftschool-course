@@ -43,7 +43,7 @@ function loadTowns() {
     req.open('GET', 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json++', true);
     req.responseType = "json";
     req.onload = function() {
-        if (req.status > 200) {
+        if (req.status > 400) {
             reject(new Error("Server Error"));
         } 
         filterBlock.removeAttribute('style');
@@ -102,13 +102,16 @@ const reload = homeworkContainer.querySelector('#reload');
 
 
 let towns;
-loadTowns().then(myJson => {towns = myJson;})
-.catch(error => {
-    errorBlock.removeAttribute('style');
-    filterInput.setAttribute('style', 'display:none;')
-});
+function processLoadTowns() {
+    loadTowns().then(myJson => {towns = myJson;})
+    .catch(error => {
+        errorBlock.removeAttribute('style');
+        filterInput.setAttribute('style', 'display:none;')
+    });  
+}
+processLoadTowns();
 
-reload.addEventListener('click',() => loadTowns());
+reload.addEventListener('click',() => processLoadTowns());
 
 filterInput.addEventListener('keyup', function() {
     // это обработчик нажатия кливиш в текстовом поле
