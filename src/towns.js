@@ -40,9 +40,12 @@ const homeworkContainer = document.querySelector('#homework-container');
 function loadTowns() {
   let promise = new Promise((resolve, reject) => {
     var req = new XMLHttpRequest();
-    req.open('GET', 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json', true);
+    req.open('GET', 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json++', true);
     req.responseType = "json";
     req.onload = function() {
+        if (req.status > 200) {
+            reject(new Error("Server Error"));
+        } 
         filterBlock.removeAttribute('style');
         loadingBlock.remove();
         let myJson  = req.response;
@@ -52,6 +55,13 @@ function loadTowns() {
             return 0;
         });
         resolve(myJson);
+    };
+    req.abort
+    req.onerror = function() {
+        reject(new Error("Server Error"));
+    };
+    req.onabort = function() {
+        reject(new Error("Server Error"));
     };
     req.send();
 });
@@ -85,9 +95,21 @@ const filterBlock = homeworkContainer.querySelector('#filter-block');
 const filterInput = homeworkContainer.querySelector('#filter-input');
 /* Блок с результатами поиска */
 const filterResult = homeworkContainer.querySelector('#filter-result');
+/* Блок с ошибкой */
+const errorBlock = homeworkContainer.querySelector('#errow-block');
+/* Кнопка перезагрузки */
+const reload = homeworkContainer.querySelector('#reload');
+
 
 let towns;
-loadTowns().then(myJson => {towns = myJson;});
+loadTowns().then(myJson => {towns = myJson;})
+.catch(error => {
+    errorBlock.removeAttribute('style');
+    filterInput.setAttribute('style', 'display:none;')
+});
+
+reload.addEventListener('click',() => loadTowns());
+
 filterInput.addEventListener('keyup', function() {
     // это обработчик нажатия кливиш в текстовом поле
     let filter = filterInput.value.toLowerCase();
