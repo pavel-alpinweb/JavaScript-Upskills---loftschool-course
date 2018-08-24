@@ -54,14 +54,25 @@ function createDiv() {
    addListeners(newDiv);
  */
 function addListeners(target) {
-  target.setAttribute('dragstart','true');
-
-  target.addEventListener('dragstart',(e)=>{
-    target.style.top = `${e.clientY}px`;
-    target.style.left = `${e.clientX}px`;
-    console.log(e.clientX);
-    console.log(e.clientY);
-  },true);
+  target.onmousedown = function(e) { // 1. отследить нажатие
+    moveAt(e);
+    document.body.appendChild(target);
+  
+    target.style.zIndex = 1000;
+    function moveAt(e) {
+      target.style.left = e.pageX - target.offsetWidth / 2 + 'px';
+      target.style.top = e.pageY - target.offsetHeight / 2 + 'px';
+    }
+    document.onmousemove = function(e) {
+      moveAt(e);
+    }
+  
+    // 4. отследить окончание переноса
+    target.onmouseup = function() {
+      document.onmousemove = null;
+      target.onmouseup = null;
+    }
+  }
 }
 
 let addDivButton = homeworkContainer.querySelector('#addDiv');
